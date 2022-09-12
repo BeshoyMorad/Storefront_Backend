@@ -2,15 +2,15 @@
   "dev": {
     "driver": "pg",
     "host": "127.0.0.1",
-    "database": "",
-    "user": "",
-    "password": ""
+    "database": "store_front",
+    "user": "full_stack_user",
+    "password": "123"
   },
   "test": {
     "driver": "pg",
     "host": "127.0.0.1",
-    "database": "",
-    "user": "",
-    "password": ""
+    "database": "store_front_test",
+    "user": "full_stack_user",
+    "password": "123"
   }
 }
