@@ -2,7 +2,7 @@ import client from "../database";
 
 export type Order = {
   id?: number;
-  user_id: number;
+  user_id: string;
   status: string;
 };
 
@@ -15,9 +15,10 @@ export class OrderStore {
 
       const result = await conn.query(sql, [o.user_id, o.status]);
 
+      const order = result.rows[0];
       conn.release();
 
-      return result.rows[0];
+      return order;
     } catch (error) {
       throw new Error(`Cannot add new order : ${error}`);
     }
@@ -30,9 +31,10 @@ export class OrderStore {
 
       const result = await conn.query(sql);
 
+      const orders = result.rows;
       conn.release();
 
-      return result.rows;
+      return orders;
     } catch (error) {
       throw new Error(`Cannot index all orders : ${error}`);
     }
@@ -45,9 +47,10 @@ export class OrderStore {
 
       const result = await conn.query(sql, [id]);
 
+      const order = result.rows[0];
       conn.release();
 
-      return result.rows[0];
+      return order;
     } catch (error) {
       throw new Error(`Cannot get order with id ${id} : ${error}`);
     }
@@ -61,9 +64,10 @@ export class OrderStore {
 
       const result = await conn.query(sql, [o.user_id, o.status, o.id]);
 
+      const order = result.rows[0];
       conn.release();
 
-      return result.rows[0];
+      return order;
     } catch (error) {
       throw new Error(`Cannot update order with id ${o.id} : ${error}`);
     }
@@ -76,9 +80,10 @@ export class OrderStore {
 
       const result = await conn.query(sql, [id]);
 
+      const order = result.rows[0];
       conn.release();
 
-      return result.rows[0];
+      return order;
     } catch (error) {
       throw new Error(`Cannot delete order with id ${id} : ${error}`);
     }
