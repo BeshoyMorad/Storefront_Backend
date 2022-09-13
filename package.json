@@ -11,7 +11,7 @@
     "up:test": "db-migrate --env test up",
     "down:test": "db-migrate --env test down",
     "up:dev": "db-migrate up",
-    "down:dev": "db-migrate down",
+    "down:dev": "db-migrate down -c 4",
     "test": "set ENV=test && npm run build && npm run up:test && jasmine && npm run down:test"
   },
   "repository": {
