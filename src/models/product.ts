@@ -57,7 +57,6 @@ export class ProductStore {
   async update(p: Product): Promise<Product> {
     try {
       const conn = await client.connect();
-      // id: number, name: varchar, price: number, category: varchar
 
       const sql =
         "UPDATE products SET name=$1, price=$2, category=$3 WHERE id=$4 RETURNING *;";
