@@ -29,7 +29,7 @@ describe("Order Model", () => {
     await userStore.create({
       firstname: "Beshoy",
       lastname: "Morad",
-      password: "testingPassword",
+      password: "newOrderPassword",
     });
 
     const result = await store.create({
@@ -37,31 +37,32 @@ describe("Order Model", () => {
       status: "active",
     });
 
-    expect(result).toEqual({
-      id: 1,
-      user_id: "1",
-      status: "active",
-    });
+    expect(result).toEqual(
+      jasmine.objectContaining({
+        user_id: "1",
+        status: "active",
+      })
+    );
   });
 
   it("index method should return a list of orders", async () => {
     const result = await store.index();
-    expect(result).toEqual([
-      {
-        id: 1,
+    expect(result).toContain(
+      jasmine.objectContaining({
         user_id: "1",
         status: "active",
-      },
-    ]);
+      })
+    );
   });
 
   it("show method should return the correct order", async () => {
     const result = await store.show(1);
-    expect(result).toEqual({
-      id: 1,
-      user_id: "1",
-      status: "active",
-    });
+    expect(result).toEqual(
+      jasmine.objectContaining({
+        user_id: "1",
+        status: "active",
+      })
+    );
   });
 
   it("delete method should remove the order", async () => {

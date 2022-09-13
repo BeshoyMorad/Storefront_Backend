@@ -30,34 +30,32 @@ describe("User Model", () => {
       password: "testingPassword",
     });
 
-    expect(result).toEqual({
-      id: 2,
-      firstname: "Beshoy",
-      lastname: "Morad",
-      password: "testingPassword",
-    });
+    expect(result).toEqual(
+      jasmine.objectContaining({
+        firstname: "Beshoy",
+        lastname: "Morad",
+      })
+    );
   });
 
   it("index method should return a list of users", async () => {
     const result = await store.index();
-    expect(result).toEqual([
-      {
-        id: 2,
+    expect(result).toContain(
+      jasmine.objectContaining({
         firstname: "Beshoy",
         lastname: "Morad",
-        password: "testingPassword",
-      },
-    ]);
+      })
+    );
   });
 
   it("show method should return the correct user", async () => {
     const result = await store.show(2);
-    expect(result).toEqual({
-      id: 2,
-      firstname: "Beshoy",
-      lastname: "Morad",
-      password: "testingPassword",
-    });
+    expect(result).toEqual(
+      jasmine.objectContaining({
+        firstname: "Beshoy",
+        lastname: "Morad",
+      })
+    );
   });
 
   it("delete method should remove the user", async () => {

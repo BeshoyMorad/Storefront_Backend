@@ -30,34 +30,35 @@ describe("Product Model", () => {
       price: 50,
     });
 
-    expect(result).toEqual({
-      id: 1,
-      name: "Product1",
-      category: "testingCategory",
-      price: 50,
-    });
+    expect(result).toEqual(
+      jasmine.objectContaining({
+        name: "Product1",
+        category: "testingCategory",
+        price: 50,
+      })
+    );
   });
 
   it("index method should return a list of products", async () => {
     const result = await store.index();
-    expect(result).toEqual([
-      {
-        id: 1,
+    expect(result).toContain(
+      jasmine.objectContaining({
         name: "Product1",
         category: "testingCategory",
         price: 50,
-      },
-    ]);
+      })
+    );
   });
 
   it("show method should return the correct product", async () => {
     const result = await store.show(1);
-    expect(result).toEqual({
-      id: 1,
-      name: "Product1",
-      category: "testingCategory",
-      price: 50,
-    });
+    expect(result).toEqual(
+      jasmine.objectContaining({
+        name: "Product1",
+        category: "testingCategory",
+        price: 50,
+      })
+    );
   });
 
   it("delete method should remove the product", async () => {
