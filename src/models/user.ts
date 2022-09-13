@@ -81,7 +81,7 @@ export class UserStore {
   async destroy(id: number): Promise<User> {
     try {
       const conn = await client.connect();
-      const sql = "DELETE FROM users WHERE id=$1;";
+      const sql = "DELETE FROM users WHERE id=$1 RETURNING *;";
 
       const result = await conn.query(sql, [id]);
 
