@@ -16,3 +16,5 @@ app.get("/", function (_req: Request, res: Response) {
 });
 
 app.listen(port, () => console.log(`starting app on: ${port}`));
+
+export default app;
