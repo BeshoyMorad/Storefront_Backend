@@ -12,6 +12,9 @@ const create = async (req: Request, res: Response) => {
     };
 
     const newUser = await store.create(user);
+
+    //JWT here
+
     res.json(newUser);
   } catch (error) {
     res.status(400).json(error);
@@ -75,4 +78,22 @@ const destroy = async (req: Request, res: Response) => {
   }
 };
 
-export default { create, index, show, update, destroy };
+const authenticate = async (req: Request, res: Response) => {
+  try {
+    const user: User = {
+      firstname: req.body.firstname,
+      lastname: req.body.lastname,
+      password: req.body.password,
+    };
+    const newUser = await store.authenticate(user);
+    if (newUser === null) {
+      res.status(401).send("Wrong name or password");
+    } else {
+      res.json(newUser);
+    }
+  } catch (err) {
+    res.status(400).json(err);
+  }
+};
+
+export default { create, index, show, update, destroy, authenticate };
