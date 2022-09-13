@@ -16,9 +16,10 @@ export class ProductStore {
 
       const result = await conn.query(sql, [p.name, p.price, p.category]);
 
+      const product = result.rows[0];
       conn.release();
 
-      return result.rows[0];
+      return product;
     } catch (error) {
       throw new Error(`Cannot add new product ${p.name} : ${error}`);
     }
@@ -31,9 +32,10 @@ export class ProductStore {
 
       const result = await conn.query(sql);
 
+      const products = result.rows;
       conn.release();
 
-      return result.rows;
+      return products;
     } catch (error) {
       throw new Error(`Cannot index all products : ${error}`);
     }
@@ -46,9 +48,10 @@ export class ProductStore {
 
       const result = await conn.query(sql, [id]);
 
+      const product = result.rows[0];
       conn.release();
 
-      return result.rows[0];
+      return product;
     } catch (error) {
       throw new Error(`Cannot get product with id ${id} : ${error}`);
     }
@@ -63,9 +66,10 @@ export class ProductStore {
 
       const result = await conn.query(sql, [p.name, p.price, p.category, p.id]);
 
+      const product = result.rows[0];
       conn.release();
 
-      return result.rows[0];
+      return product;
     } catch (error) {
       throw new Error(`Cannot update product ${p.name} : ${error}`);
     }
@@ -78,9 +82,10 @@ export class ProductStore {
 
       const result = await conn.query(sql, [id]);
 
+      const product = result.rows[0];
       conn.release();
 
-      return result.rows[0];
+      return product;
     } catch (error) {
       throw new Error(`Cannot delete product with id ${id} : ${error}`);
     }
