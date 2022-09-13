@@ -2,8 +2,8 @@ import client from "../database";
 
 export type User = {
   id?: number;
-  firstName: string;
-  lastName: string;
+  firstname: string;
+  lastname: string;
   password: string;
 };
 
@@ -12,19 +12,20 @@ export class UserStore {
     try {
       const conn = await client.connect();
       const sql =
-        "INSERT INTO users(firstName, lastName, password) VALUES($1, $2, $3) RETURNING *;";
+        "INSERT INTO users(firstname, lastname, password) VALUES($1, $2, $3) RETURNING *;";
 
       const result = await conn.query(sql, [
-        u.firstName,
-        u.lastName,
+        u.firstname,
+        u.lastname,
         u.password,
       ]);
 
+      const user = result.rows[0];
       conn.release();
 
-      return result.rows[0];
+      return user;
     } catch (error) {
-      throw new Error(`Cannot add new user ${u.firstName} : ${error}`);
+      throw new Error(`Cannot add new user ${u.firstname} : ${error}`);
     }
   }
 
@@ -35,9 +36,10 @@ export class UserStore {
 
       const result = await conn.query(sql);
 
+      const users = result.rows;
       conn.release();
 
-      return result.rows;
+      return users;
     } catch (error) {
       throw new Error(`Cannot index all users : ${error}`);
     }
@@ -50,9 +52,10 @@ export class UserStore {
 
       const result = await conn.query(sql, [id]);
 
+      const user = result.rows[0];
       conn.release();
 
-      return result.rows[0];
+      return user;
     } catch (error) {
       throw new Error(`Cannot get user with id ${id} : ${error}`);
     }
@@ -62,15 +65,16 @@ export class UserStore {
     try {
       const conn = await client.connect();
       const sql =
-        "UPDATE users SET firstName=$1, lastName=$2 WHERE id=$3 RETURNING *;";
+        "UPDATE users SET firstname=$1, lastname=$2 WHERE id=$3 RETURNING *;";
 
-      const result = await conn.query(sql, [u.firstName, u.lastName, u.id]);
+      const result = await conn.query(sql, [u.firstname, u.lastname, u.id]);
 
+      const user = result.rows[0];
       conn.release();
 
-      return result.rows[0];
+      return user;
     } catch (error) {
-      throw new Error(`Cannot update user ${u.firstName} : ${error}`);
+      throw new Error(`Cannot update user ${u.firstname} : ${error}`);
     }
   }
 
@@ -81,9 +85,10 @@ export class UserStore {
 
       const result = await conn.query(sql, [id]);
 
+      const user = result.rows[0];
       conn.release();
 
-      return result.rows[0];
+      return user;
     } catch (error) {
       throw new Error(`Cannot delete user with id ${id} : ${error}`);
     }

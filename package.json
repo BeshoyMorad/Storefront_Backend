@@ -9,7 +9,7 @@
     "prod": "npm run build && nodemon dist/server.js",
     "watch": "tsc-watch --esModuleInterop src/server.ts --outDir ./dist --onSuccess \"nodemon ./dist/server.js\"",
     "up:test": "db-migrate --env test up",
-    "down:test": "db-migrate --env test down",
+    "down:test": "db-migrate --env test down -c 4",
     "up:dev": "db-migrate up",
     "down:dev": "db-migrate down -c 4",
     "test": "set ENV=test && npm run build && npm run up:test && jasmine && npm run down:test"
