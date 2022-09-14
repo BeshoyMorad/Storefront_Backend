@@ -1,20 +1,21 @@
 import express from "express";
 import userController from "../controllers/userController";
+import verifyAuthToken from "../middlewares/verifyAuthToken";
 
 const user = express.Router();
 
-user.get("/", userController.index);
+user.get("/", verifyAuthToken, userController.index);
 
-user.get("/:id", userController.show);
+user.get("/:id", verifyAuthToken, userController.show);
 
-user.post("/", userController.create);
+user.post("/", verifyAuthToken, userController.create);
 
 user.post("/authenticate", userController.authenticate);
 
-user.put("/:id", userController.update);
+user.put("/:id", verifyAuthToken, userController.update);
 
-user.delete("/:id", userController.destroy);
+user.delete("/:id", verifyAuthToken, userController.destroy);
 
-user.get("/:user_id/orders", userController.currentOrder);
+user.get("/:user_id/orders", verifyAuthToken, userController.currentOrder);
 
 export default user;

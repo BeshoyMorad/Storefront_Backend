@@ -4,6 +4,10 @@ import jwt from "jsonwebtoken";
 export default (req: Request, res: Response, next: NextFunction) => {
   try {
     const authorizationHeader = req.headers.authorization;
+
+    if (!authorizationHeader) {
+      throw new Error(`didn't find authorization header`);
+    }
     const token = (authorizationHeader as string).split(" ")[1];
     jwt.verify(token, process.env.TOKEN_SECRET as string);
 

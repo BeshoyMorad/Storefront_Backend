@@ -94,6 +94,8 @@ const authenticate = async (req: Request, res: Response) => {
     if (!newUser) {
       res.status(401).send("Wrong name or password");
     } else {
+      let token = jwt.sign({ user: newUser }, secret as string);
+      res.header("authorization", "Bearer " + token);
       res.json(newUser);
     }
   } catch (error) {
