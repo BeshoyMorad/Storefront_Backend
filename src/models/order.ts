@@ -40,10 +40,10 @@ export class OrderStore {
     }
   }
 
-  async show(id: number): Promise<Order> {
+  async show(id: string): Promise<Order> {
     try {
       const conn = await client.connect();
-      const sql = "SELECT * FROM orders WHERE id=$1;";
+      const sql = "SELECT * FROM orders WHERE user_id=$1;";
 
       const result = await conn.query(sql, [id]);
 
@@ -76,7 +76,7 @@ export class OrderStore {
   async destroy(id: number): Promise<Order> {
     try {
       const conn = await client.connect();
-      const sql = "DELETE FROM orders WHERE id=$1;";
+      const sql = "DELETE FROM orders WHERE id=$1 RETURNING *;";
 
       const result = await conn.query(sql, [id]);
 
@@ -86,6 +86,25 @@ export class OrderStore {
       return order;
     } catch (error) {
       throw new Error(`Cannot delete order with id ${id} : ${error}`);
+    }
+  }
+
+  async completedOrders(id: string): Promise<Order[]> {
+    try {
+      const conn = await client.connect();
+      const sql =
+        "SELECT * FROM orders WHERE user_id=$1 AND status='complete';";
+
+      const result = await conn.query(sql, [id]);
+
+      const orders = result.rows;
+      conn.release();
+
+      return orders;
+    } catch (error) {
+      throw new Error(
+        `Cannot find completed orders for user with id ${id} : ${error}`
+      );
     }
   }
 }

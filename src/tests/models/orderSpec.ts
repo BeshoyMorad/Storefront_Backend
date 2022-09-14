@@ -66,7 +66,7 @@ describe("Order Model", () => {
   });
 
   it("show method should return the correct order", async () => {
-    const result = await store.show(1);
+    const result = await store.show("1");
     expect(result).toEqual({
       id: 1,
       user_id: "1",
