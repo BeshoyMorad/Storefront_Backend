@@ -1,9 +1,12 @@
 import { Request, Response } from "express";
 import { Order, OrderStore } from "../models/order";
-import { DashboardQueries } from "../models/dashboard";
+import {
+  Orders_Products,
+  Orders_ProductsStore,
+} from "../models/Orders_Products";
 
 const store = new OrderStore();
-const dashboard = new DashboardQueries();
+const opStore = new Orders_ProductsStore();
 
 const create = async (req: Request, res: Response) => {
   try {
@@ -95,14 +98,14 @@ const completedOrders = async (req: Request, res: Response) => {
 
 const productsInOrder = async (req: Request, res: Response) => {
   try {
-    const orders = await dashboard.productsInOrder(Number(req.params.order_id));
+    const products = await opStore.productsInOrder(Number(req.params.order_id));
 
-    if (!orders.length) {
+    if (!products.length) {
       res
         .status(404)
         .send(`Cannot find products in order with id ${req.params.order_id}`);
     } else {
-      res.json(orders);
+      res.json(products);
     }
   } catch (error) {
     res.status(400).send((error as Error).message);
@@ -111,11 +114,12 @@ const productsInOrder = async (req: Request, res: Response) => {
 
 const addProductToOrder = async (req: Request, res: Response) => {
   try {
-    const order = await dashboard.addProductToOrder(
-      Number(req.body.order_id),
-      Number(req.body.product_id),
-      Number(req.body.quantity)
-    );
+    const op: Orders_Products = {
+      order_id: Number(req.body.order_id),
+      product_id: Number(req.body.product_id),
+      quantity: Number(req.body.quantity),
+    };
+    const order = await opStore.addProductToOrder(op);
     res.json(order);
   } catch (error) {
     res.status(400).send((error as Error).message);
@@ -124,11 +128,12 @@ const addProductToOrder = async (req: Request, res: Response) => {
 
 const editQuantityOfProduct = async (req: Request, res: Response) => {
   try {
-    const order = await dashboard.editQuantityOfProduct(
-      Number(req.params.order_id),
-      Number(req.params.product_id),
-      Number(req.body.quantity)
-    );
+    const op: Orders_Products = {
+      order_id: Number(req.body.order_id),
+      product_id: Number(req.body.product_id),
+      quantity: Number(req.body.quantity),
+    };
+    const order = await opStore.editQuantityOfProduct(op);
     if (!order) {
       res
         .status(404)
@@ -143,7 +148,7 @@ const editQuantityOfProduct = async (req: Request, res: Response) => {
 
 const destroyProductFromOrder = async (req: Request, res: Response) => {
   try {
-    const order = await dashboard.destroyProductFromOrder(
+    const order = await opStore.destroyProductFromOrder(
       Number(req.params.order_id),
       Number(req.params.product_id)
     );

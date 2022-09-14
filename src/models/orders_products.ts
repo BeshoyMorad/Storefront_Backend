@@ -1,6 +1,11 @@
 import client from "../database";
 
-export class DashboardQueries {
+export type Orders_Products = {
+  order_id: number;
+  product_id: number;
+  quantity: number;
+};
+export class Orders_ProductsStore {
   async productsInOrder(order_id: number): Promise<
     {
       id: number;
@@ -42,24 +47,20 @@ export class DashboardQueries {
     }
   }
 
-  async addProductToOrder(
-    order_id: number,
-    product_id: number,
-    quantity: number
-  ): Promise<{ product_id: number; order_id: number; quantity: number }> {
+  async addProductToOrder(op: Orders_Products): Promise<Orders_Products> {
     try {
       const conn = await client.connect();
       const orderSql = "SELECT * FROM orders WHERE id=$1";
 
-      const result = await conn.query(orderSql, [order_id]);
+      const result = await conn.query(orderSql, [op.order_id]);
       const order = result.rows[0];
 
       if (!order) {
-        throw new Error(`Cannot not find order ${order_id}`);
+        throw new Error(`Cannot not find order ${op.order_id}`);
       }
       if (order.status !== "active") {
         throw new Error(
-          `Cannot not add product ${product_id} to order ${order_id} because order status is ${order.status}`
+          `Cannot not add product ${op.product_id} to order ${op.order_id} because order status is ${order.status}`
         );
       }
       conn.release();
@@ -71,7 +72,11 @@ export class DashboardQueries {
         "INSERT INTO orders_products (quantity, order_id, product_id) VALUES($1, $2, $3) RETURNING *;";
       const conn = await client.connect();
 
-      const result = await conn.query(sql, [quantity, order_id, product_id]);
+      const result = await conn.query(sql, [
+        op.quantity,
+        op.order_id,
+        op.product_id,
+      ]);
 
       const order = result.rows[0];
 
@@ -80,29 +85,25 @@ export class DashboardQueries {
       return order;
     } catch (error) {
       throw new Error(
-        `Cannot add product ${product_id} to order ${order_id} : ${error}`
+        `Cannot add product ${op.product_id} to order ${op.order_id} : ${error}`
       );
     }
   }
 
-  async editQuantityOfProduct(
-    order_id: number,
-    product_id: number,
-    quantity: number
-  ): Promise<{ product_id: number; order_id: number; quantity: number }> {
+  async editQuantityOfProduct(op: Orders_Products): Promise<Orders_Products> {
     try {
       const conn = await client.connect();
       const orderSql = "SELECT * FROM orders WHERE id=$1";
 
-      const result = await conn.query(orderSql, [order_id]);
+      const result = await conn.query(orderSql, [op.order_id]);
       const order = result.rows[0];
 
       if (!order) {
-        throw new Error(`Cannot not find order ${order_id}`);
+        throw new Error(`Cannot not find order ${op.order_id}`);
       }
       if (order.status !== "active") {
         throw new Error(
-          `Cannot edit quantity of product ${product_id} in order ${order_id} because order status is ${order.status}`
+          `Cannot edit quantity of product ${op.product_id} in order ${op.order_id} because order status is ${order.status}`
         );
       }
       conn.release();
@@ -114,7 +115,11 @@ export class DashboardQueries {
         "UPDATE orders_products SET quantity=$1 WHERE order_id=$2 AND product_id=$3 RETURNING *;";
       const conn = await client.connect();
 
-      const result = await conn.query(sql, [quantity, order_id, product_id]);
+      const result = await conn.query(sql, [
+        op.quantity,
+        op.order_id,
+        op.product_id,
+      ]);
 
       const order = result.rows[0];
 
@@ -123,7 +128,7 @@ export class DashboardQueries {
       return order;
     } catch (error) {
       throw new Error(
-        `Cannot edit quantity of product ${product_id} in order ${order_id} : ${error}`
+        `Cannot edit quantity of product ${op.product_id} in order ${op.order_id} : ${error}`
       );
     }
   }
@@ -131,7 +136,7 @@ export class DashboardQueries {
   async destroyProductFromOrder(
     order_id: number,
     product_id: number
-  ): Promise<{ product_id: number; order_id: number; quantity: number }> {
+  ): Promise<Orders_Products> {
     try {
       const conn = await client.connect();
       const orderSql = "SELECT * FROM orders WHERE id=$1";
