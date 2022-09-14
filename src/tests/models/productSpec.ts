@@ -1,8 +1,18 @@
+import client from "../../database";
 import { ProductStore } from "../../models/product";
 
 const store = new ProductStore();
 
 describe("Product Model", () => {
+  afterAll(async () => {
+    //reset the sequence of products table to start with 1
+    const conn = await client.connect();
+    const sql =
+      "DELETE FROM products;\n ALTER SEQUENCE products_id_seq RESTART WITH 1;";
+    await conn.query(sql);
+    conn.release();
+  });
+
   it("should have an index method", () => {
     expect(store.index).toBeDefined();
   });
