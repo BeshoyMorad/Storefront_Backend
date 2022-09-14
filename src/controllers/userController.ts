@@ -1,4 +1,4 @@
-import e, { Request, Response } from "express";
+import { Request, Response } from "express";
 import { User, UserStore } from "../models/user";
 
 const store = new UserStore();
@@ -34,7 +34,7 @@ const show = async (req: Request, res: Response) => {
   try {
     const id = Number(req.params.id);
     const user = await store.show(id);
-    if (user === undefined) {
+    if (!user) {
       res.status(404).send(`Cannot find user with id ${id}`);
     } else {
       res.json(user);
@@ -54,7 +54,7 @@ const update = async (req: Request, res: Response) => {
     };
 
     const newUser = await store.update(user);
-    if (newUser === undefined) {
+    if (!newUser) {
       res.status(404).send(`Cannot find user with id ${user.id}`);
     } else {
       res.json(newUser);
@@ -68,7 +68,7 @@ const destroy = async (req: Request, res: Response) => {
   try {
     const id = Number(req.params.id);
     const user = await store.destroy(id);
-    if (user === undefined) {
+    if (!user) {
       res.status(404).send(`Cannot find user with id ${id}`);
     } else {
       res.json(user);
@@ -86,7 +86,7 @@ const authenticate = async (req: Request, res: Response) => {
       password: req.body.password,
     };
     const newUser = await store.authenticate(user);
-    if (newUser === null) {
+    if (!newUser) {
       res.status(401).send("Wrong name or password");
     } else {
       res.json(newUser);
