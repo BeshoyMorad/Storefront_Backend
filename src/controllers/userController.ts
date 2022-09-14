@@ -1,6 +1,8 @@
 import { Request, Response } from "express";
 import { User, UserStore } from "../models/user";
 import { OrderStore } from "../models/order";
+import jwt from "jsonwebtoken";
+const secret = process.env.TOKEN_SECRET;
 
 const store = new UserStore();
 const orderStore = new OrderStore();
@@ -15,7 +17,8 @@ const create = async (req: Request, res: Response) => {
 
     const newUser = await store.create(user);
 
-    //JWT here
+    let token = jwt.sign({ user: newUser }, secret as string);
+    res.header("authorization", "Bearer " + token);
 
     res.json(newUser);
   } catch (error) {
