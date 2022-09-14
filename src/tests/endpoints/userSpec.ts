@@ -1,10 +1,21 @@
 import supertest from "supertest";
+import client from "../../database";
 import app from "../../server";
 
 const request = supertest(app);
 
-fdescribe("Testing user endpoint", () => {
+describe("Testing user endpoint", () => {
   let token: string;
+
+  afterAll(async () => {
+    //reset the sequence of users table to start with 1
+    const conn = await client.connect();
+    const sql =
+      "DELETE FROM users;\n ALTER SEQUENCE users_id_seq RESTART WITH 1;";
+    await conn.query(sql);
+    conn.release();
+  });
+
   it("Create a new user using '/api/users' POST", async () => {
     const response = await request.post("/api/users").send({
       firstname: "Beshoy",
