@@ -86,12 +86,19 @@ authorization: Bearer {token}
 | Edit the quantity of the product for an order [token required] | /api/orders/:order_id/products/:product_id | PUT    |
 | Remove the product from an order [token required]              | /api/orders/:order_id/products/:product_id | DELETE |
 
-- For POST and PUT requests you will have to keep this data shape
+- For POST requests you will have to keep this data shape
 
 ```json
 {
-    "order_id": ,
     "product_id": ,
+    "quantity":
+}
+```
+
+- For PUT requests you will have to keep this data shape
+
+```json
+{
     "quantity":
 }
 ```
