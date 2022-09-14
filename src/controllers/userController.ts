@@ -1,7 +1,9 @@
 import { Request, Response } from "express";
 import { User, UserStore } from "../models/user";
+import { OrderStore } from "../models/order";
 
 const store = new UserStore();
+const orderStore = new OrderStore();
 
 const create = async (req: Request, res: Response) => {
   try {
@@ -96,4 +98,27 @@ const authenticate = async (req: Request, res: Response) => {
   }
 };
 
-export default { create, index, show, update, destroy, authenticate };
+const currentOrder = async (req: Request, res: Response) => {
+  try {
+    const order = await orderStore.currentOrder(Number(req.params.user_id));
+    if (!order) {
+      res
+        .status(404)
+        .send(`Cannot find orders for user with id ${req.params.user_id}`);
+    } else {
+      res.json(order);
+    }
+  } catch (error) {
+    res.status(400).send((error as Error).message);
+  }
+};
+
+export default {
+  create,
+  index,
+  show,
+  update,
+  destroy,
+  authenticate,
+  currentOrder,
+};

@@ -15,4 +15,6 @@ user.put("/:id", userController.update);
 
 user.delete("/:id", userController.destroy);
 
+user.get("/:user_id/orders", userController.currentOrder);
+
 export default user;
