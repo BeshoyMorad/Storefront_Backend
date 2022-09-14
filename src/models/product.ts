@@ -90,4 +90,22 @@ export class ProductStore {
       throw new Error(`Cannot delete product with id ${id} : ${error}`);
     }
   }
+
+  async withCategory(category: string): Promise<Product[]> {
+    try {
+      const conn = await client.connect();
+      const sql = "SELECT * FROM products WHERE category=$1";
+
+      const result = await conn.query(sql, [category]);
+
+      const products = result.rows;
+      conn.release();
+
+      return products;
+    } catch (error) {
+      throw new Error(
+        `Cannot find products with category ${category} : ${error}`
+      );
+    }
+  }
 }
