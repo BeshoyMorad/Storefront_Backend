@@ -17,7 +17,7 @@ const create = async (req: Request, res: Response) => {
 
     res.json(newUser);
   } catch (error) {
-    res.status(400).json(error);
+    res.status(400).send((error as Error).message);
   }
 };
 
@@ -26,7 +26,7 @@ const index = async (_req: Request, res: Response) => {
     const users = await store.index();
     res.json(users);
   } catch (error) {
-    res.status(400).json(error);
+    res.status(400).send((error as Error).message);
   }
 };
 
@@ -40,7 +40,7 @@ const show = async (req: Request, res: Response) => {
       res.json(user);
     }
   } catch (error) {
-    res.status(400).json(error);
+    res.status(400).send((error as Error).message);
   }
 };
 
@@ -60,7 +60,7 @@ const update = async (req: Request, res: Response) => {
       res.json(newUser);
     }
   } catch (error) {
-    res.status(400).json(error);
+    res.status(400).send((error as Error).message);
   }
 };
 
@@ -74,7 +74,7 @@ const destroy = async (req: Request, res: Response) => {
       res.json(user);
     }
   } catch (error) {
-    res.status(400).json(error);
+    res.status(400).send((error as Error).message);
   }
 };
 
@@ -91,8 +91,8 @@ const authenticate = async (req: Request, res: Response) => {
     } else {
       res.json(newUser);
     }
-  } catch (err) {
-    res.status(400).json(err);
+  } catch (error) {
+    res.status(400).send((error as Error).message);
   }
 };
 
