@@ -117,8 +117,8 @@ const productsInOrder = async (req: Request, res: Response) => {
 const addProductToOrder = async (req: Request, res: Response) => {
   try {
     const op: Orders_Products = {
-      order_id: Number(req.body.order_id),
-      product_id: Number(req.body.product_id),
+      order_id: req.params.order_id,
+      product_id: req.body.product_id,
       quantity: Number(req.body.quantity),
     };
     const order = await opStore.addProductToOrder(op);
@@ -131,8 +131,8 @@ const addProductToOrder = async (req: Request, res: Response) => {
 const editQuantityOfProduct = async (req: Request, res: Response) => {
   try {
     const op: Orders_Products = {
-      order_id: Number(req.body.order_id),
-      product_id: Number(req.body.product_id),
+      order_id: req.body.order_id,
+      product_id: req.body.product_id,
       quantity: Number(req.body.quantity),
     };
     const order = await opStore.editQuantityOfProduct(op);

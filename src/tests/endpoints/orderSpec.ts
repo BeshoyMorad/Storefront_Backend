@@ -4,7 +4,7 @@ import app from "../../server";
 
 const request = supertest(app);
 
-fdescribe("Testing order endpoint", () => {
+describe("Testing order endpoint", () => {
   let token: string;
   afterAll(async () => {
     //reset the sequence of orders table to start with 1
