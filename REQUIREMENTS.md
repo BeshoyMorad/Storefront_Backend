@@ -24,7 +24,7 @@ These are the notes from a meeting with the frontend developer that describe wha
 | ------------------------ | ----------------------- | ------ |
 | Index [token required]   | /api/users              | GET    |
 | Show [token required]    | /api/users/:id          | GET    |
-| Create [token required]  | /api/users              | POST   |
+| Create                   | /api/users              | POST   |
 | Authenticate             | /api/users/authenticate | POST   |
 | Update [token required]  | /api/users/:id          | PUT    |
 | Destroy [token required] | /api/users/:id          | DELETE |
