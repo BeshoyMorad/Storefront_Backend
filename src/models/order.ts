@@ -43,7 +43,7 @@ export class OrderStore {
   async show(id: string): Promise<Order> {
     try {
       const conn = await client.connect();
-      const sql = "SELECT * FROM orders WHERE user_id=$1;";
+      const sql = "SELECT * FROM orders WHERE id=$1;";
 
       const result = await conn.query(sql, [id]);
 
@@ -105,6 +105,33 @@ export class OrderStore {
       throw new Error(
         `Cannot find completed orders for user with id ${id} : ${error}`
       );
+    }
+  }
+
+  async currentOrder(id: number): Promise<Order> {
+    try {
+      const conn = await client.connect();
+      const userSql = "SELECT * FROM users WHERE id=$1;";
+      const result = await conn.query(userSql, [id]);
+      const user = result.rows[0];
+      if (!user) {
+        throw new Error(`Cannot not find user with id ${id}`);
+      }
+      conn.release();
+    } catch (error) {
+      throw new Error(`${error}`);
+    }
+
+    try {
+      const conn = await client.connect();
+      const userSql =
+        "SELECT * FROM orders WHERE user_id=$1 AND status='active';";
+      const result = await conn.query(userSql, [id]);
+      const order = result.rows[0];
+      conn.release();
+      return order;
+    } catch (error) {
+      throw new Error(`Cannot find orders for user with id ${id}`);
     }
   }
 }

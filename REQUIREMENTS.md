@@ -31,14 +31,19 @@ These are the notes from a meeting with the frontend developer that describe wha
 
 #### Orders
 
-| Action                                                   | Endpoint                              | Method |
-| -------------------------------------------------------- | ------------------------------------- | ------ |
-| Index [token required]                                   | /api/orders                           | GET    |
-| Create [token required]                                  | /api/orders                           | POST   |
-| Update [token required]                                  | /api/orders/:id                       | PUT    |
-| Destroy [token required]                                 | /api/orders/:id                       | DELETE |
-| Current Order by user (args: user id)[token required]    | /api/orders/:user_id                  | GET    |
-| Completed Orders by user (args: user id)[token required] | /api/orders/completed-orders/:user_id | GET    |
+| Action                                                         | Endpoint                                   | Method |
+| -------------------------------------------------------------- | ------------------------------------------ | ------ |
+| Index [token required]                                         | /api/orders                                | GET    |
+| Show [token required]                                          | /api/orders/:id                            | GET    |
+| Create [token required]                                        | /api/orders                                | POST   |
+| Update [token required]                                        | /api/orders/:id                            | PUT    |
+| Destroy [token required]                                       | /api/orders/:id                            | DELETE |
+| Current Order by user (args: user id)[token required]          | /api/users/:user_id/orders                 | GET    |
+| Completed Orders by user (args: user id)[token required]       | /api/orders/completed-orders/:user_id      | GET    |
+| Get the products in an order [token required]                  | /api/orders/:order_id/products             | GET    |
+| Add new product to the order [token required]                  | /api/orders/:order_id/products             | POST   |
+| Edit the quantity of the product for an order [token required] | /api/orders/:order_id/products/:product_id | PUT    |
+| Remove the product from an order [token required]              | /api/orders/:order_id/products/:product_id | DELETE |
 
 ## Data Shapes
 
