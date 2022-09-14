@@ -8,35 +8,45 @@ These are the notes from a meeting with the frontend developer that describe wha
 
 #### Products
 
-| Action | Endpoint | Method |
-| ----- | ---- | ---- |
-| Index | /api/products | GET |
-| Show | /api/products/:id | GET |
-| Create | /api/products | POST |
-| Top 5 most popular products | /api/top_five_products | GET |
-| Products by category (args: product category) | /api/products/:category | GET |
+| Action                                        | Endpoint                        | Method |
+| --------------------------------------------- | ------------------------------- | ------ |
+| Index                                         | /api/products                   | GET    |
+| Show                                          | /api/products/:id               | GET    |
+| Create [token required]                       | /api/products                   | POST   |
+| Update [token required]                       | /api/products/:id               | PUT    |
+| Destroy [token required]                      | /api/products/:id               | DELETE |
+| Products by category (args: product category) | /api/products/:category         | GET    |
+| Top 5 most popular products [xxxxxxxxxxx]     | /api/products/top_five_products | GET    |
 
 #### Users
-| Action | Endpoint | Method |
-| ----- | ---- | ---- |
-| Index [token required] | /api/users | GET |
-| Show [token required] | /api/users/:id | GET |
-| Create [token required] | /api/users | POST |
+
+| Action                        | Endpoint                | Method |
+| ----------------------------- | ----------------------- | ------ |
+| Index [token required]        | /api/users              | GET    |
+| Show [token required]         | /api/users/:id          | GET    |
+| Create [token required]       | /api/users              | POST   |
+| Authenticate [token required] | /api/users/authenticate | POST   |
+| Update [token required]       | /api/users/:id          | PUT    |
+| Destroy [token required]      | /api/users/:id          | DELETE |
 
 #### Orders
 
-| Action | Endpoint | Method |
-| ----- | ---- | ---- |
-| Current Order by user (args: user id)[token required] | /api/orders/:user_id | GET |
-| Completed Orders by user (args: user id)[token required] | /api/completed-orders/:user_id | GET |
+| Action                                                   | Endpoint                              | Method |
+| -------------------------------------------------------- | ------------------------------------- | ------ |
+| Index [token required]                                   | /api/orders                           | GET    |
+| Create [token required]                                  | /api/orders                           | POST   |
+| Update [token required]                                  | /api/orders/:id                       | PUT    |
+| Destroy [token required]                                 | /api/orders/:id                       | DELETE |
+| Current Order by user (args: user id)[token required]    | /api/orders/:user_id                  | GET    |
+| Completed Orders by user (args: user id)[token required] | /api/orders/completed-orders/:user_id | GET    |
 
 ## Data Shapes
 
-| Table | Data | Primary Key |
-| ----- | ---- | ----------- |
-| products | id: number, name: varchar, price: number, category: varchar | id |
-| users | id: number, firstName: varchar, lastName: varchar, password: varchar | id |
-| orders | id: number, user_id: number [foreign key to users table], status: varchar | id |
+| Table           | Data                                                                                                                 | Primary Key            |
+| --------------- | -------------------------------------------------------------------------------------------------------------------- | ---------------------- |
+| products        | id: number, name: varchar, price: number, category: varchar                                                          | id                     |
+| users           | id: number, firstName: varchar, lastName: varchar, password: varchar                                                 | id                     |
+| orders          | id: number, user_id: number [foreign key to users table], status: varchar                                            | id                     |
 | orders_products | product_id: number [foreign key to products table], order_id: number [foreign key to orders table], quantity: number | (product_id, order_id) |
 
 #### Product
