@@ -8,7 +8,7 @@ user.get("/", verifyAuthToken, userController.index);
 
 user.get("/:id", verifyAuthToken, userController.show);
 
-user.post("/", verifyAuthToken, userController.create);
+user.post("/", userController.create);
 
 user.post("/authenticate", userController.authenticate);
 
