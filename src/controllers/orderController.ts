@@ -87,7 +87,9 @@ const completedOrders = async (req: Request, res: Response) => {
     if (!orders.length) {
       res
         .status(404)
-        .send(`Cannot find orders for user with id ${req.params.user_id}`);
+        .send(
+          `Cannot find completed orders for user with id ${req.params.user_id}`
+        );
     } else {
       res.json(orders);
     }
