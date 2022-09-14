@@ -50,7 +50,7 @@ describe("Testing user endpoint", () => {
     expect(response.statusCode).toEqual(200);
   });
 
-  it("Try to get user don't exist", async () => {
+  it("Try to get user doesn't exist", async () => {
     const response = await request
       .get("/api/users/3")
       .set("authorization", "Bearer " + token);

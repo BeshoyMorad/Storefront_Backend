@@ -50,7 +50,7 @@ describe("Testing product endpoint", () => {
     expect(response.statusCode).toEqual(200);
   });
 
-  it("Try to get product don't exist", async () => {
+  it("Try to get product doesn't exist", async () => {
     const response = await request.get("/api/products/5");
 
     expect(response.statusCode).toEqual(404);

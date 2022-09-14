@@ -7,9 +7,11 @@ These are the notes from a meeting with the frontend developer that describe wha
 ## API Endpoints
 
 - For JWT you have to use this key value in the header
+
 ```
 authorization: Bearer {token}
 ```
+
 #### Users
 
 | Action                   | Endpoint                | Method |
@@ -22,26 +24,28 @@ authorization: Bearer {token}
 | Destroy [token required] | /api/users/:id          | DELETE |
 
 - For POST and PUT requests you will have to keep this data shape
+
 ```json
 {
-    "firstname": "",
-    "lastname": "",
-    "password": ""
+  "firstname": "",
+  "lastname": "",
+  "password": ""
 }
 ```
 
 #### Products
 
-| Action                                        | Endpoint                        | Method |
-| --------------------------------------------- | ------------------------------- | ------ |
-| Index                                         | /api/products                   | GET    |
-| Show                                          | /api/products/:id               | GET    |
-| Create [token required]                       | /api/products                   | POST   |
-| Update [token required]                       | /api/products/:id               | PUT    |
-| Destroy [token required]                      | /api/products/:id               | DELETE |
-| Products by category (args: product category) | /api/products/:category         | GET    |
+| Action                                        | Endpoint                | Method |
+| --------------------------------------------- | ----------------------- | ------ |
+| Index                                         | /api/products           | GET    |
+| Show                                          | /api/products/:id       | GET    |
+| Create [token required]                       | /api/products           | POST   |
+| Update [token required]                       | /api/products/:id       | PUT    |
+| Destroy [token required]                      | /api/products/:id       | DELETE |
+| Products by category (args: product category) | /api/products/:category | GET    |
 
 - For POST and PUT requests you will have to keep this data shape
+
 ```json
 {
     "name": "",
@@ -52,23 +56,25 @@ authorization: Bearer {token}
 
 #### Orders
 
-| Action                                                         | Endpoint                                   | Method |
-| -------------------------------------------------------------- | ------------------------------------------ | ------ |
-| Index [token required]                                         | /api/orders                                | GET    |
-| Show [token required]                                          | /api/orders/:id                            | GET    |
-| Create [token required]                                        | /api/orders                                | POST   |
-| Update [token required]                                        | /api/orders/:id                            | PUT    |
-| Destroy [token required]                                       | /api/orders/:id                            | DELETE |
-| Current Order by user (args: user id)[token required]          | /api/users/:user_id/orders                 | GET    |
-| Completed Orders by user (args: user id)[token required]       | /api/orders/completed-orders/:user_id      | GET    |
+| Action                                                   | Endpoint                              | Method |
+| -------------------------------------------------------- | ------------------------------------- | ------ |
+| Index [token required]                                   | /api/orders                           | GET    |
+| Show [token required]                                    | /api/orders/:id                       | GET    |
+| Create [token required]                                  | /api/orders                           | POST   |
+| Update [token required]                                  | /api/orders/:id                       | PUT    |
+| Destroy [token required]                                 | /api/orders/:id                       | DELETE |
+| Current Order by user (args: user id)[token required]    | /api/users/:user_id/orders            | GET    |
+| Completed Orders by user (args: user id)[token required] | /api/orders/completed_orders/:user_id | GET    |
 
 - For POST and PUT requests you will have to keep this data shape
+
 ```json
 {
-    "user_id": "",
-    "status": ""
+  "user_id": "",
+  "status": ""
 }
 ```
+
 > status must be "active" or "complete"
 
 #### Orders_Products
@@ -81,11 +87,12 @@ authorization: Bearer {token}
 | Remove the product from an order [token required]              | /api/orders/:order_id/products/:product_id | DELETE |
 
 - For POST and PUT requests you will have to keep this data shape
+
 ```json
 {
     "order_id": ,
     "product_id": ,
-    "quantity": 
+    "quantity":
 }
 ```
 
