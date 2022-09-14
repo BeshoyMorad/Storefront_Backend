@@ -3,7 +3,7 @@ import { Order, OrderStore } from "../models/order";
 import {
   Orders_Products,
   Orders_ProductsStore,
-} from "../models/Orders_Products";
+} from "../models/orders_products";
 
 const store = new OrderStore();
 const opStore = new Orders_ProductsStore();
