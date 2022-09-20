@@ -5,9 +5,9 @@ Second Project of Udacity Scholarship Advanced Full-Stack Web Development
 ## 📙 About
 
 - Simple api for storefront that can provide the frontend with:
-- - users info
-- - products info
-- - orders for each user and the products within that order
+   * users info
+   * products info
+   * orders for each user and the products within that order
 
 ## 💻 Features
 
